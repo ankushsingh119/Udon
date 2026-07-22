@@ -1,29 +1,45 @@
 "use client"
 
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect, useCallback, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Check, Zap, Crown, Minus } from "lucide-react"
+import { Check, Zap, Crown, Minus, Loader2 } from "lucide-react"
 import { BillingSkeleton } from "@/components/skeletons/billing-skeleton"
 import { useSkeletonLoading } from "@/hooks/use-skeleton-loading"
+
 const STRIPE_PRO_PRICE_ID = "price_1Tvz7RIDRagc4eENvjkeiPN2"
 
 function BillingContent() {
   const { isLoading, isExiting } = useSkeletonLoading(2000)
   const [upgrading, setUpgrading] = useState(false)
-  const [status, setStatus] = useState<"success" | "canceled" | null>(null)
+  const [currentPlan, setCurrentPlan] = useState<"FREE" | "PRO">("FREE")
+  const [fetchingPlan, setFetchingPlan] = useState(true)
   const searchParams = useSearchParams()
 
-  useEffect(() => {
-    setUpgrading(false)
-    if (searchParams.get("success") === "true") {
-      setStatus("success")
-    } else if (searchParams.get("canceled") === "true") {
-      setStatus("canceled")
+  const fetchSubscription = useCallback(async () => {
+    try {
+      const res = await fetch("/api/subscription")
+      if (res.ok) {
+        const data = await res.json()
+        setCurrentPlan(data.plan === "PRO" ? "PRO" : "FREE")
+      }
+    } catch {
+      // keep default FREE
+    } finally {
+      setFetchingPlan(false)
     }
-  }, [searchParams])
+  }, [])
+
+  useEffect(() => {
+    // If returning from checkout with success, immediately show PRO
+    if (searchParams.get("success") === "true") {
+      setCurrentPlan("PRO")
+      setFetchingPlan(false)
+    }
+    fetchSubscription()
+  }, [fetchSubscription, searchParams])
 
   const handleUpgrade = async () => {
     setUpgrading(true)
@@ -40,6 +56,18 @@ function BillingContent() {
       }
     } catch (error) {
       console.error("Checkout error:", error)
+      setUpgrading(false)
+    }
+  }
+
+  const handleDowngrade = async () => {
+    setUpgrading(true)
+    try {
+      await fetch("/api/subscription", { method: "POST" })
+      setCurrentPlan("FREE")
+    } catch (error) {
+      console.error("Downgrade error:", error)
+    } finally {
       setUpgrading(false)
     }
   }
@@ -62,15 +90,16 @@ function BillingContent() {
         </p>
       </div>
 
-      {status === "success" && (
-        <div className="mb-6 p-4 rounded-lg bg-green-50 border border-green-200">
+      {searchParams.get("success") === "true" && (
+        <div className="mb-6 p-4 rounded-lg bg-green-50 border border-green-200 flex items-center gap-2">
+          <Check size={15} className="text-green-600 shrink-0" />
           <p className="text-green-800 text-[13px]">
             Payment successful! Your Pro plan is now active.
           </p>
         </div>
       )}
 
-      {status === "canceled" && (
+      {searchParams.get("canceled") === "true" && (
         <div className="mb-6 p-4 rounded-lg bg-yellow-50 border border-yellow-200">
           <p className="text-yellow-800 text-[13px]">
             Payment was cancelled. You can try again anytime.
@@ -80,7 +109,7 @@ function BillingContent() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
         {/* Free Plan */}
-        <Card className="udon-card flex flex-col">
+        <Card className={`udon-card flex flex-col ${currentPlan === "FREE" ? "" : ""}`}>
           <CardContent className="flex flex-col gap-5 p-6 flex-1">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
@@ -133,17 +162,53 @@ function BillingContent() {
               </li>
             </ul>
 
-            <Button
-              disabled
-              className="w-full h-11 text-[13px] font-semibold rounded-[12px] bg-[var(--bg-surface)] text-[var(--text-muted)] border border-[var(--border-default)] cursor-not-allowed opacity-60"
-            >
-              Current Plan
-            </Button>
+            {currentPlan === "FREE" ? (
+              <Button
+                disabled
+                className="w-full h-11 text-[13px] font-semibold rounded-[12px] bg-[var(--bg-surface)] text-[var(--text-muted)] border border-[var(--border-default)] cursor-not-allowed opacity-60"
+              >
+                Current Plan
+              </Button>
+            ) : (
+              <Button
+                onClick={handleDowngrade}
+                disabled={upgrading}
+                className="udon-btn udon-btn-primary w-full h-11 text-[13px] font-semibold rounded-[12px]"
+              >
+                {upgrading ? (
+                  <span className="flex items-center gap-1.5">
+                    {[0, 1, 2].map((i) => (
+                      <span
+                        key={i}
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          background: "currentColor",
+                          display: "inline-block",
+                          animation: "udon-bounce 1.4s ease-in-out infinite",
+                          animationDelay: `${i * 0.16}s`,
+                        }}
+                      />
+                    ))}
+                  </span>
+                ) : (
+                  "Choose Free Plan"
+                )}
+              </Button>
+            )}
           </CardContent>
         </Card>
 
         {/* Pro Plan */}
-        <Card className="udon-card-elevated flex flex-col" style={{ borderColor: 'var(--accent)', boxShadow: '0 0 0 1px var(--accent), var(--shadow-md)' }}>
+        <Card
+          className="udon-card-elevated flex flex-col"
+          style={
+            currentPlan === "PRO"
+              ? { borderColor: "var(--accent)", boxShadow: "0 0 0 1px var(--accent), var(--shadow-md)" }
+              : { borderColor: "var(--accent)", boxShadow: "0 0 0 1px var(--accent), var(--shadow-md)" }
+          }
+        >
           <CardContent className="flex flex-col gap-5 p-6 flex-1">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
@@ -201,32 +266,41 @@ function BillingContent() {
               </li>
             </ul>
 
-            <Button
-              onClick={handleUpgrade}
-              disabled={upgrading}
-              className="udon-btn udon-btn-primary w-full h-11 text-[13px] font-semibold rounded-[12px]"
-            >
-              {upgrading ? (
-                <span className="flex items-center gap-1.5">
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "currentColor",
-                        display: "inline-block",
-                        animation: "udon-bounce 1.4s ease-in-out infinite",
-                        animationDelay: `${i * 0.16}s`,
-                      }}
-                    />
-                  ))}
-                </span>
-              ) : (
-                "Upgrade to Pro"
-              )}
-            </Button>
+            {currentPlan === "PRO" ? (
+              <Button
+                disabled
+                className="w-full h-11 text-[13px] font-semibold rounded-[12px] bg-[var(--bg-surface)] text-[var(--text-muted)] border border-[var(--border-default)] cursor-not-allowed opacity-60"
+              >
+                Current Plan
+              </Button>
+            ) : (
+              <Button
+                onClick={handleUpgrade}
+                disabled={upgrading}
+                className="udon-btn udon-btn-primary w-full h-11 text-[13px] font-semibold rounded-[12px]"
+              >
+                {upgrading ? (
+                  <span className="flex items-center gap-1.5">
+                    {[0, 1, 2].map((i) => (
+                      <span
+                        key={i}
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          background: "currentColor",
+                          display: "inline-block",
+                          animation: "udon-bounce 1.4s ease-in-out infinite",
+                          animationDelay: `${i * 0.16}s`,
+                        }}
+                      />
+                    ))}
+                  </span>
+                ) : (
+                  "Upgrade to Pro"
+                )}
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>

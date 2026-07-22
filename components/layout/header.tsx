@@ -49,8 +49,7 @@ export function Header({
         borderBottom: '1px solid var(--border-light)',
       }}
     >
-      <div className="flex items-center gap-3 text-[13px] text-[var(--text-secondary)]">
-        <span className="font-semibold text-[var(--text)]">{userEmail || brandUrl}</span>
+      <div className="flex items-center gap-3">
         {plan === "free" ? (
           <span className="badge-udon-free">
             Free · {generationsUsed} of {generationLimit} used

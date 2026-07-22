@@ -6,10 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { ExternalLink, Loader2, Palette, Type, FileText, Target, Users, Lightbulb, Globe, Camera, Megaphone, Plus, X, CheckCircle2, Image as ImageIcon, ZoomIn } from "lucide-react";
+import { ExternalLink, Loader2, Palette, Type, FileText, Target, Users, Lightbulb, Globe, Camera, Megaphone, Plus, X, CheckCircle2, Image as ImageIcon, ZoomIn, Download } from "lucide-react";
 import { BrandSkeleton } from "@/components/skeletons/brand-skeleton";
 import { useSkeletonLoading } from "@/hooks/use-skeleton-loading";
 import { cn } from "@/lib/utils";
+import { generateBrandPDF } from "@/lib/generate-brand-pdf";
 
 interface BrandProfilePageProps {
   user?: {
@@ -100,6 +101,20 @@ export default function BrandProfilePage(_props: BrandProfilePageProps) {
     const el = sectionRefs.current.get(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const [exporting, setExporting] = React.useState(false);
+
+  const handleExportPDF = async () => {
+    if (!extractedBrand) return;
+    setExporting(true);
+    try {
+      await generateBrandPDF(extractedBrand);
+    } catch (err) {
+      console.error("PDF export failed:", err);
+    } finally {
+      setExporting(false);
     }
   };
 
@@ -290,21 +305,40 @@ export default function BrandProfilePage(_props: BrandProfilePageProps) {
           <div className="space-y-6">
             {/* Section Navigation */}
             <nav className="sticky top-0 z-30 bg-[var(--bg-page)]/80 backdrop-blur-md py-3 -mx-8 px-8">
-              <div className="flex gap-1 p-1 bg-[var(--bg-surface)] rounded-xl w-fit">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={cn(
-                      "px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200",
-                      activeSection === section.id
-                        ? "bg-white text-[var(--text)] shadow-sm"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-white/50"
-                    )}
-                  >
-                    {section.label}
-                  </button>
-                ))}
+              <div className="flex items-center justify-between">
+                <div className="flex gap-1 p-1 bg-[var(--bg-surface)] rounded-xl w-fit">
+                  {sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200",
+                        activeSection === section.id
+                          ? "bg-white text-[var(--text)] shadow-sm"
+                          : "text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-white/50"
+                      )}
+                    >
+                      {section.label}
+                    </button>
+                  ))}
+                </div>
+                <Button
+                  onClick={handleExportPDF}
+                  disabled={exporting}
+                  className="udon-btn-primary h-9 text-xs shrink-0"
+                >
+                  {exporting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-3.5 h-3.5 mr-1.5" />
+                      Export Brand Profile
+                    </>
+                  )}
+                </Button>
               </div>
             </nav>
 
