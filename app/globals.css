@@ -4,126 +4,679 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.148 0.004 228.8);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.148 0.004 228.8);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.148 0.004 228.8);
-    --primary: oklch(0.52 0.105 223.128);
-    --primary-foreground: oklch(0.984 0.019 200.873);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.963 0.002 197.1);
-    --muted-foreground: oklch(0.56 0.021 213.5);
-    --accent: oklch(0.963 0.002 197.1);
-    --accent-foreground: oklch(0.218 0.008 223.9);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.925 0.005 214.3);
-    --input: oklch(0.925 0.005 214.3);
-    --ring: oklch(0.723 0.014 214.4);
-    --chart-1: oklch(0.872 0.007 219.6);
-    --chart-2: oklch(0.56 0.021 213.5);
-    --chart-3: oklch(0.45 0.017 213.2);
-    --chart-4: oklch(0.378 0.015 216);
-    --chart-5: oklch(0.275 0.011 216.9);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.987 0.002 197.1);
-    --sidebar-foreground: oklch(0.148 0.004 228.8);
-    --sidebar-primary: oklch(0.609 0.126 221.723);
-    --sidebar-primary-foreground: oklch(0.984 0.019 200.873);
-    --sidebar-accent: oklch(0.963 0.002 197.1);
-    --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
-    --sidebar-border: oklch(0.925 0.005 214.3);
-    --sidebar-ring: oklch(0.723 0.014 214.4);
-}
+/* ================================================================
+   UDON DESIGN SYSTEM - "STUDIO"
+   
+   A complete reinvention. Deep charcoal foundation, coral red accent,
+   pure white surfaces. Bold, editorial, modern.
+   
+   This is not a refinement. This is a new generation.
+   ================================================================ */
 
-.dark {
-    --background: oklch(0.148 0.004 228.8);
-    --foreground: oklch(0.987 0.002 197.1);
-    --card: oklch(0.218 0.008 223.9);
-    --card-foreground: oklch(0.987 0.002 197.1);
-    --popover: oklch(0.218 0.008 223.9);
-    --popover-foreground: oklch(0.987 0.002 197.1);
-    --primary: oklch(0.45 0.085 224.283);
-    --primary-foreground: oklch(0.984 0.019 200.873);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.275 0.011 216.9);
-    --muted-foreground: oklch(0.723 0.014 214.4);
-    --accent: oklch(0.275 0.011 216.9);
-    --accent-foreground: oklch(0.987 0.002 197.1);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.56 0.021 213.5);
-    --chart-1: oklch(0.872 0.007 219.6);
-    --chart-2: oklch(0.56 0.021 213.5);
-    --chart-3: oklch(0.45 0.017 213.2);
-    --chart-4: oklch(0.378 0.015 216);
-    --chart-5: oklch(0.275 0.011 216.9);
-    --sidebar: oklch(0.218 0.008 223.9);
-    --sidebar-foreground: oklch(0.987 0.002 197.1);
-    --sidebar-primary: oklch(0.715 0.143 215.221);
-    --sidebar-primary-foreground: oklch(0.302 0.056 229.695);
-    --sidebar-accent: oklch(0.275 0.011 216.9);
-    --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.56 0.021 213.5);
+:root {
+  /* === FOUNDATION === */
+  --void: #0a0a0a;
+  --carbon: #111111;
+  --graphite: #1a1a1a;
+  --slate: #2a2a2a;
+  --ash: #3a3a3a;
+  --smoke: #666666;
+  --silver: #999999;
+  --fog: #cccccc;
+  --mist: #e5e5e5;
+  --cloud: #f5f5f5;
+  --snow: #fafafa;
+  --white: #ffffff;
+
+  /* === ACCENT - Coral Red === */
+  --coral: #E84855;
+  --coral-hover: #d63844;
+  --coral-active: #c42833;
+  --coral-light: #fef2f2;
+  --coral-muted: #991b1b;
+
+  /* === ACCENT SECONDARY - Electric === */
+  --electric: #6366f1;
+  --electric-hover: #4f46e5;
+  --electric-light: #eef2ff;
+
+  /* === SEMANTIC === */
+  --success: #22c55e;
+  --success-light: #f0fdf4;
+  --info: #3b82f6;
+  --info-light: #eff6ff;
+  --danger: #ef4444;
+  --danger-light: #fef2f2;
+  --warning: #f59e0b;
+  --warning-light: #fffbeb;
+
+  /* === BACKGROUNDS === */
+  --bg: #f7f7f7;
+  --bg-secondary: #f0f0f0;
+  --bg-surface: #e5e5e5;
+  --bg-hover: #d4d4d4;
+  --bg-active: #a3a3a3;
+  --bg-carbon: #111111;
+  --bg-graphite: #1a1a1a;
+  --bg-slate: #2a2a2a;
+
+  /* === GRADIENTS === */
+  --bg-gradient-page: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+  --bg-gradient-carbon: linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+  --bg-gradient-coral: linear-gradient(135deg, #E84855 0%, #d63844 100%);
+  --bg-gradient-surface: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+
+  /* === ELEVATED SURFACES === */
+  --surface-elevated: #ffffff;
+  --surface-elevated-hover: #fafafa;
+
+  /* === BORDERS === */
+  --border-light: #e5e5e5;
+  --border-default: #d4d4d4;
+  --border-dark: #a3a3a3;
+
+  /* === TEXT === */
+  --text: #111111;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-muted: #636363;
+  --text-on-carbon: #ffffff;
+  --text-on-carbon-secondary: #a3a3a3;
+
+  /* === ACCENT TOKENS === */
+  --accent: #E84855;
+  --accent-hover: #d63844;
+  --accent-light: #fef2f2;
+  --accent-muted: #991b1b;
+
+  /* === SECONDARY ACCENT === */
+  --accent-2: #6366f1;
+  --accent-2-hover: #4f46e5;
+  --accent-2-light: #eef2ff;
+  --accent-2-text: #3730a3;
+
+  /* === PLAN TIERS === */
+  --plan-free: #737373;
+  --plan-pro: #E84855;
+
+  /* === GENERATION PIPELINE === */
+  --gen-queued: #a3a3a3;
+  --gen-generating: #E84855;
+  --gen-ready: #22c55e;
+  --gen-downloaded: #111111;
+  --gen-failed: #ef4444;
+
+  /* === SPACING (8px base) === */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* === BORDER RADIUS === */
+  --radius-override-xs: 4px;
+  --radius-override-sm: 6px;
+  --radius-override-md: 8px;
+  --radius-override-lg: 12px;
+  --radius-override-xl: 16px;
+  --radius-override-full: 9999px;
+
+  /* === SHADOWS - cool-tinted, dramatic === */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.16), 0 12px 24px rgba(0, 0, 0, 0.08);
+  --shadow-ring: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-coral: 0 4px 14px rgba(232, 72, 85, 0.25);
+  --shadow-coral-lg: 0 8px 24px rgba(232, 72, 85, 0.35);
+  --shadow-float: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  /* === TYPOGRAPHY === */
+  --font-size-2xs: 10px;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-size-5xl: 36px;
+  --font-size-6xl: 48px;
+
+  /* === FONT WEIGHTS === */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* === LINE HEIGHTS === */
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* === TRANSITIONS === */
+  --duration-instant: 50ms;
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* === SHADCN/UI MAPPED TOKENS === */
+  --background: #f7f7f7;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+  --primary: #E84855;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #111111;
+  --muted: #e5e5e5;
+  --muted-foreground: #737373;
+  --accent-shadcn: #e5e5e5;
+  --accent-foreground: #111111;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #d4d4d4;
+  --input: #d4d4d4;
+  --ring: #E84855;
+  --chart-1: #E84855;
+  --chart-2: #6366f1;
+  --chart-3: #22c55e;
+  --chart-4: #f59e0b;
+  --chart-5: #3b82f6;
+  --radius: 0.5rem;
+  --sidebar: #111111;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #E84855;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1a1a1a;
+  --sidebar-ring: #E84855;
 }
 
 @theme inline {
-    --font-sans: var(--font-sans);
-    --font-heading: var(--font-heading);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --color-ink: #111111;
+  --color-cream: #fafafa;
+  --color-terracotta: #E84855;
+  --color-saffron: #f59e0b;
+  --color-berry: #ef4444;
+  --color-midnight: #111111;
+  --color-amber: #E84855;
+  --color-snow: #fafafa;
+  --color-slate: #737373;
+  --color-coral: #E84855;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent-shadcn);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
   html {
     @apply font-sans;
-    }
+  }
+}
+
+/* ================================================================
+   ANIMATIONS - purposeful, spring-based, never decorative
+   ================================================================ */
+
+@keyframes udon-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes udon-fade-in-subtle {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes udon-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+@keyframes udon-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 72, 85, 0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(232, 72, 85, 0.06); }
+}
+
+@keyframes udon-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes udon-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes udon-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes udon-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes udon-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes udon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes udon-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* ================================================================
+   UTILITY CLASSES
+   ================================================================ */
+
+.udon-fade-in {
+  animation: udon-fade-in 0.4s var(--ease-spring) both;
+}
+
+.udon-fade-in-subtle {
+  animation: udon-fade-in-subtle 0.4s var(--ease-default) both;
+}
+
+.udon-pulse-dot {
+  animation: udon-pulse-dot 2s var(--ease-default) infinite;
+}
+
+.udon-pulse-glow {
+  animation: udon-pulse-glow 2.5s var(--ease-default) infinite;
+}
+
+.udon-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(232, 72, 85, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: udon-shimmer 2s linear infinite;
+}
+
+.udon-spin {
+  animation: udon-spin 1.5s linear infinite;
+}
+
+.udon-slide-up {
+  animation: udon-slide-up 0.4s var(--ease-spring) both;
+}
+
+.udon-slide-down {
+  animation: udon-slide-down 0.3s var(--ease-spring) both;
+}
+
+.udon-scale-in {
+  animation: udon-scale-in 0.25s var(--ease-bounce) both;
+}
+
+.udon-float {
+  animation: udon-float 3s ease-in-out infinite;
+}
+
+/* Scrollbar - minimal, modern */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: var(--radius-override-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-dark); }
+
+/* Selection - coral accent */
+::selection {
+  background: var(--coral);
+  color: var(--white);
+}
+
+/* Focus ring - coral, visible, accessible */
+*:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   STATUS SYSTEM
+   ================================================================ */
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-override-full);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-queued {
+  background: transparent;
+  border: 1.5px solid var(--text-tertiary);
+}
+
+.status-generating {
+  background: var(--coral);
+  animation: udon-pulse-dot 2s var(--ease-default) infinite;
+}
+
+.status-ready {
+  background: var(--success);
+}
+
+.status-downloaded {
+  background: var(--carbon);
+}
+
+.status-failed {
+  background: var(--danger);
+}
+
+/* ================================================================
+   BADGE SYSTEM - clean, minimal
+   ================================================================ */
+
+.badge-udon-free {
+  background: var(--cloud);
+  color: var(--text-tertiary);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+  letter-spacing: 0.02em;
+}
+
+.badge-udon-pro {
+  background: var(--coral-light);
+  color: var(--coral);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+  letter-spacing: 0.02em;
+}
+
+.badge-udon-generating {
+  background: var(--coral-light);
+  color: var(--coral);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+}
+
+.badge-udon-ready {
+  background: var(--success-light);
+  color: #16a34a;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+}
+
+.badge-udon-failed {
+  background: var(--danger-light);
+  color: var(--danger);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+}
+
+.badge-udon-outline {
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-override-full);
+}
+
+/* Campaign card glow */
+.card-generating {
+  animation: udon-pulse-glow 2.5s var(--ease-default) infinite;
+}
+
+/* ================================================================
+   SKELETON LOADING SYSTEM
+   ================================================================ */
+
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes skeleton-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes skeleton-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.skeleton-bone {
+  background: linear-gradient(
+    90deg,
+    var(--cloud) 0%,
+    var(--mist) 20%,
+    var(--cloud) 40%,
+    var(--cloud) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-override-md);
+}
+
+.skeleton-bone-sm {
+  background: linear-gradient(
+    90deg,
+    var(--cloud) 0%,
+    var(--mist) 20%,
+    var(--cloud) 40%,
+    var(--cloud) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-override-sm);
+}
+
+.skeleton-container {
+  animation: skeleton-fade-in 0.3s ease-out both;
+}
+
+.skeleton-container-exit {
+  animation: skeleton-fade-out 0.4s ease-in both;
+}
+
+/* ================================================================
+   CARD SYSTEM - clean, elevated, purposeful
+   ================================================================ */
+
+.udon-card {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-override-lg);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+
+.udon-card:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+.udon-card-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-override-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-default);
+}
+
+.udon-card-elevated:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/* ================================================================
+   INPUT SYSTEM - clean, minimal
+   ================================================================ */
+
+.udon-input {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  padding: 10px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-override-md);
+  background: var(--white);
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--duration-normal) var(--ease-default),
+              box-shadow var(--duration-normal) var(--ease-default);
+  width: 100%;
+}
+
+.udon-input:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(232, 72, 85, 0.08);
+}
+
+.udon-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================================================================
+   BUTTON SYSTEM - bold, purposeful
+   ================================================================ */
+
+.udon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-override-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-default);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.udon-btn:active {
+  transform: scale(0.98);
+}
+
+.udon-btn-primary {
+  background: var(--coral);
+  color: var(--white);
+  border-color: var(--coral);
+  font-size: var(--font-size-md);
+  padding: 10px 20px;
+  box-shadow: var(--shadow-coral);
+}
+
+.udon-btn-primary:hover {
+  background: var(--coral-hover);
+  border-color: var(--coral-hover);
+  box-shadow: var(--shadow-coral-lg);
+}
+
+.udon-btn-secondary {
+  background: var(--white);
+  color: var(--text);
+  border-color: var(--border-default);
+  font-size: var(--font-size-md);
+  padding: 10px 20px;
+}
+
+.udon-btn-secondary:hover {
+  background: var(--cloud);
+  border-color: var(--border-dark);
+}
+
+.udon-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+  font-size: var(--font-size-md);
+  padding: 10px 20px;
+}
+
+.udon-btn-ghost:hover {
+  background: var(--cloud);
+  color: var(--text);
 }
