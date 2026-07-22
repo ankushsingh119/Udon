@@ -2,12 +2,15 @@ import Stripe from 'stripe'
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-06-24.dahlia',
-})
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2026-06-24.dahlia',
+  })
+}
 
 export async function GET() {
   try {
+    const stripe = getStripe()
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -61,6 +64,7 @@ export async function GET() {
 
 export async function POST() {
   try {
+    const stripe = getStripe()
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
